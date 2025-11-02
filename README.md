@@ -16,16 +16,37 @@ CREATE DATABASE banking;
 mvn clean package
 java -jar target/banking-service-1.0.0.jar
 
-APIs:
-- POST /customers
-- POST /loans/check
-- GET /transactions/summary/{customerId}?month=10&year=2025
-- GET /reports/topCustomers?limit=3&month=10&year=2025
+## APIs:
+POST /customers
+Request URL: http://localhost:8080/customers
+Sample Request Body (JSON):
+{
+  "name": "Ravi Kumar",
+  "email": "ravi.kumar@example.com",
+  "income": 55000,
+  "aadharNumber": "123456789012",
+  "dob": "1995-06-15"
+}
+
+POST /loans/check
+Request URL: http://localhost:8080/loans/check
+Sample Request Body (JSON):
+{
+  "customerId": "CUST20250001",
+  "loanAmount": 400000,
+  "loanType": "PERSONAL"
+}
+
+GET /transactions/summary
+Request URL: http://localhost:8080/transactions/summary/CUST20250001?month=10&year=2025
+
+GET /reports/topCustomers
+Request URL: http://localhost:8080/reports/topCustomers?limit=3&month=10&year=2025
 
 ## SQL Seeding (Sample Data)
 Sample records will be automatically inserted during application startup.
 
-- Customers
+# Customers
 
 INSERT INTO customers (id, customer_id, name, email, aadhar_number, income, dob) VALUES
 (1, 'CUST202500001', 'Priya', 'priya@gmail.com', '111122223333', 50000, '1990-05-15'),
@@ -34,7 +55,7 @@ INSERT INTO customers (id, customer_id, name, email, aadhar_number, income, dob)
 (4, 'CUST202500004', 'Anita', 'anita@gmail.com', '444455556666', 120000, '1980-11-02'),
 (5, 'CUST202500005', 'Suresh', 'suresh@gmail.com', '555566667777', 60000, '1992-09-25');
 
-- Loans
+# Loans
 
 INSERT INTO loans (id, customer_id, amount, loan_type, created_on, status) VALUES
 (1, 'CUST202500001', 200000, 'PERSONAL', '2025-01-10', 'APPROVED'),
@@ -43,7 +64,7 @@ INSERT INTO loans (id, customer_id, amount, loan_type, created_on, status) VALUE
 (4, 'CUST202500005', 100000, 'PERSONAL', '2024-05-20', 'APPROVED'),
 (5, 'CUST202500005', 300000, 'PERSONAL', '2025-01-15', 'APPROVED');
 
-- Transactions
+# Transactions
 
 INSERT INTO transactions (id, customer_id, amount, type, txn_date) VALUES
 (1, 'CUST202500001', 5000, 'DEBIT', '2025-10-05'),
