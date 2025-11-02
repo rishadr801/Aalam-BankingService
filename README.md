@@ -1,25 +1,59 @@
-# Aalam-BankingService
-Spring Boot project for basic banking operations
+# 🏦 Banking Service API
 
-# Banking Service (Java 8 / Spring Boot 2.7.x)
+A Spring Boot–based Banking Service application designed to handle customer onboarding, loan eligibility checks, transaction summaries, and top customer reports.
 
-## Prerequisites
+---
+
+## ⚙️ Tech Stack
+- Java 8
+- Spring Boot 2.7.x
+- MySQL
+- Maven
+- JPA / Hibernate
+- REST API (JSON)
+
+---
+
+## 🧾 Prerequisites
 - Java 8 JDK
 - Maven
-- MySQL running locally with DB `banking`
+- MySQL running locally with a database named `banking`
 
-## MySQL setup (example)
+---
+
+## 💾 MySQL Setup (Example)
+```sql
 CREATE DATABASE banking;
--- Adjust user if needed; current application.properties uses root / rishad
+```
+> Adjust credentials in `application.properties` if needed (default: root / rishad).
 
-## Run
+---
+
+## 🚀 Run the Application
+```bash
 mvn clean package
 java -jar target/banking-service-1.0.0.jar
+```
+Application starts on:
+```
+http://localhost:8080
+```
 
-## APIs:
-POST /customers
-Request URL: http://localhost:8080/customers
-Sample Request Body (JSON):
+---
+
+## 🧩 APIs
+
+### 1️⃣ Create Customer
+**Endpoint:**  
+`POST /customers`
+
+**Request URL:**  
+```
+http://localhost:8080/customers
+```
+
+**Sample Request Body (JSON):**
+```json
 {
   "name": "Ravi Kumar",
   "email": "ravi.kumar@example.com",
@@ -27,60 +61,84 @@ Sample Request Body (JSON):
   "aadharNumber": "123456789012",
   "dob": "1995-06-15"
 }
+```
 
-POST /loans/check
-Request URL: http://localhost:8080/loans/check
-Sample Request Body (JSON):
+---
+
+### 2️⃣ Check Loan Eligibility
+**Endpoint:**  
+`POST /loans/check`
+
+**Request URL:**  
+```
+http://localhost:8080/loans/check
+```
+
+**Sample Request Body (JSON):**
+```json
 {
   "customerId": "CUST20250001",
   "loanAmount": 400000,
   "loanType": "PERSONAL"
 }
+```
 
-GET /transactions/summary
-Request URL: http://localhost:8080/transactions/summary/CUST20250001?month=10&year=2025
+---
 
-GET /reports/topCustomers
-Request URL: http://localhost:8080/reports/topCustomers?limit=3&month=10&year=2025
+### 3️⃣ Transaction Summary
+**Endpoint:**  
+`GET /transactions/summary/{customerId}?month={month}&year={year}`
 
-## SQL Seeding (Sample Data)
-Sample records will be automatically inserted during application startup.
+**Request URL Example:**  
+```
+http://localhost:8080/transactions/summary/CUST20250001?month=10&year=2025
+```
 
-# Customers
+**Sample Response:**
+```json
+{
+  "totalDebit": 40000,
+  "totalCredit": 25000,
+  "highestTransactionDay": "2025-10-05",
+  "transactionCount": 12
+}
+```
 
-INSERT INTO customers (id, customer_id, name, email, aadhar_number, income, dob) VALUES
-(1, 'CUST202500001', 'Priya', 'priya@gmail.com', '111122223333', 50000, '1990-05-15'),
-(2, 'CUST202500002', 'Ravi', 'ravi@gmail.com', '222233334444', 80000, '1985-03-10'),
-(3, 'CUST202500003', 'Kumar', 'kumar@gmail.com', '333344445555', 25000, '1998-07-20'),
-(4, 'CUST202500004', 'Anita', 'anita@gmail.com', '444455556666', 120000, '1980-11-02'),
-(5, 'CUST202500005', 'Suresh', 'suresh@gmail.com', '555566667777', 60000, '1992-09-25');
+---
 
-# Loans
+### 4️⃣ Top Customers Report
+**Endpoint:**  
+`GET /reports/topCustomers?limit={limit}&month={month}&year={year}`
 
-INSERT INTO loans (id, customer_id, amount, loan_type, created_on, status) VALUES
-(1, 'CUST202500001', 200000, 'PERSONAL', '2025-01-10', 'APPROVED'),
-(2, 'CUST202500002', 500000, 'HOME', '2024-12-15', 'APPROVED'),
-(3, 'CUST202500005', 200000, 'PERSONAL', '2024-12-20', 'APPROVED'),
-(4, 'CUST202500005', 100000, 'PERSONAL', '2024-05-20', 'APPROVED'),
-(5, 'CUST202500005', 300000, 'PERSONAL', '2025-01-15', 'APPROVED');
+**Request URL Example:**  
+```
+http://localhost:8080/reports/topCustomers?limit=3&month=10&year=2025
+```
 
-# Transactions
+**Sample Response:**
+```json
+[
+  {"customerId": "CUST20250003", "name": "Ravi", "totalVolume": 95000},
+  {"customerId": "CUST20250001", "name": "Priya", "totalVolume": 87000}
+]
+```
 
-INSERT INTO transactions (id, customer_id, amount, type, txn_date) VALUES
-(1, 'CUST202500001', 5000, 'DEBIT', '2025-10-05'),
-(2, 'CUST202500001', 8000, 'CREDIT', '2025-10-03'),
-(3, 'CUST202500002', 15000, 'DEBIT', '2025-10-05'),
-(4, 'CUST202500003', 2000, 'CREDIT', '2025-10-10'),
-(5, 'CUST202500004', 25000, 'DEBIT', '2025-10-12'),
-(6, 'CUST202500005', 12000, 'CREDIT', '2025-10-01'),
-(7, 'CUST202500001', 3000, 'DEBIT', '2025-10-05'),
-(8, 'CUST202500002', 20000, 'CREDIT', '2025-10-02'),
-(9, 'CUST202500005', 5000, 'DEBIT', '2025-10-05'),
-(10, 'CUST202500004', 8000, 'CREDIT', '2025-10-20');
+---
 
+## 🗄️ SQL Seeding (Sample Data)
+The application automatically seeds data using the `src/main/resources/data.sql` file.
 
-## Viewing & Removing Data
+### ✅ Auto-Inserted Data Includes:
+- 5 Customers
+- 5 Loans
+- 10 Transactions
 
+This data is automatically loaded during startup, so APIs can be tested immediately.
+
+---
+
+## 🧰 Database Queries
+```sql
 SELECT * FROM customers;
 SELECT * FROM loans;
 SELECT * FROM transactions;
@@ -88,3 +146,9 @@ SELECT * FROM transactions;
 TRUNCATE TABLE transactions;
 TRUNCATE TABLE loans;
 TRUNCATE TABLE customers;
+```
+
+---
+
+## ⚠️ Note
+- Project implemented using Java 8
