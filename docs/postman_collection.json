@@ -1,0 +1,125 @@
+{
+  "info": {
+    "name": "Banking Service - Samples",
+    "_postman_id": "banking-sample",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Customer",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"name\": \"Test\", \"email\": \"test@gmail.com\", \"aadharNumber\": \"999900001111\", \"income\": 50000, \"dob\": \"1992-01-01\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/customers",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "customers"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Loan Check",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"customerId\": \"CUST202500001\", \"loanAmount\": 400000, \"loanType\": \"PERSONAL\"}"
+        },
+        "url": {
+          "raw": "http://localhost:8080/loans/check",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "loans",
+            "check"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Transaction Summary",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/transactions/summary/CUST202500001?month=10&year=2025",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "transactions",
+            "summary",
+            "CUST202500001"
+          ],
+          "query": [
+            {
+              "key": "month",
+              "value": "10"
+            },
+            {
+              "key": "year",
+              "value": "2025"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Top Customers",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8080/reports/topCustomers?limit=3&month=10&year=2025",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "reports",
+            "topCustomers"
+          ],
+          "query": [
+            {
+              "key": "limit",
+              "value": "3"
+            },
+            {
+              "key": "month",
+              "value": "10"
+            },
+            {
+              "key": "year",
+              "value": "2025"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
