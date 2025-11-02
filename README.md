@@ -100,7 +100,7 @@ http://localhost:8080/transactions/summary/CUST20250001?month=10&year=2025
   "totalDebit": 40000,
   "totalCredit": 25000,
   "highestTransactionDay": "2025-10-05",
-  "transactionCount": 12
+  "transactionCount": 2
 }
 ```
 
@@ -112,7 +112,7 @@ http://localhost:8080/transactions/summary/CUST20250001?month=10&year=2025
 
 **Request URL Example:**  
 ```
-http://localhost:8080/reports/topCustomers?limit=3&month=10&year=2025
+http://localhost:8080/reports/topCustomers?limit=2&month=10&year=2025
 ```
 
 **Sample Response:**
